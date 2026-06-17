@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>حسابداری ناوگان ابرکاوان</title>
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#FF8A1E" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="ابرکاوان" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div id="login-screen" class="login-screen">
+  <div class="login-card">
+    <div class="login-brand">
+      <img src="/icon-192.png" class="brand-logo" alt="ابرکاوان" />
+      <div class="brand-text">
+        <strong>ابرکاوان</strong>
+        <span>سامانه حسابداری ناوگان</span>
+      </div>
+    </div>
+    <div class="pin-label">رمز عبور را وارد کنید</div>
+    <div class="pin-display" id="pin-display">
+      <span class="pin-dot"></span><span class="pin-dot"></span>
+      <span class="pin-dot"></span><span class="pin-dot"></span>
+    </div>
+    <div class="pin-pad" id="pin-pad">
+      <button type="button" class="key" data-digit="1">1</button>
+      <button type="button" class="key" data-digit="2">2</button>
+      <button type="button" class="key" data-digit="3">3</button>
+      <button type="button" class="key" data-digit="4">4</button>
+      <button type="button" class="key" data-digit="5">5</button>
+      <button type="button" class="key" data-digit="6">6</button>
+      <button type="button" class="key" data-digit="7">7</button>
+      <button type="button" class="key" data-digit="8">8</button>
+      <button type="button" class="key" data-digit="9">9</button>
+      <button type="button" class="key key-action" data-action="clear">پاک</button>
+      <button type="button" class="key" data-digit="0">0</button>
+      <button type="button" class="key key-action" data-action="back">⌫</button>
+    </div>
+    <p id="login-error" class="error-text hidden"></p>
+  </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="app" class="app hidden">
+
+  <!-- TOP HEADER: logo + title + profile button -->
+  <header class="app-header">
+    <div class="header-brand">
+      <img src="/icon-192.png" class="header-logo" alt="ابرکاوان" />
+      <span class="header-title">ابرکاوان</span>
+    </div>
+    <button id="profile-btn" class="profile-btn" aria-label="پنل کاربری">
+      <span class="profile-avatar" id="profile-avatar">?</span>
+      <span id="user-name" class="user-name-header"></span>
+      <span class="profile-arrow" id="profile-arrow">▾</span>
+    </button>
+  </header>
+
+  <!-- PROFILE PANEL (slides down) -->
+  <div id="profile-panel" class="profile-panel hidden">
+    <div class="profile-panel-inner">
+      <div class="profile-info">
+        <span class="profile-avatar-lg" id="profile-avatar-lg">?</span>
+        <span id="profile-name-lg" class="profile-name-lg"></span>
+      </div>
+      <div class="profile-menu">
+        <button class="profile-menu-item" id="change-pin-btn">
+          <span class="pmenu-icon">🔑</span> تغییر رمز عبور
+        </button>
+        <button class="profile-menu-item" id="manage-charterers-btn">
+          <span class="pmenu-icon">🏢</span> مدیریت چارترکنندگان
+        </button>
+        <button class="profile-menu-item danger" id="logout-btn">
+          <span class="pmenu-icon">🚪</span> خروج
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="profile-overlay" class="profile-overlay hidden"></div>
+
+  <!-- SECTION TABS (top, below header) -->
+  <nav id="section-tabs" class="section-tabs-bar"></nav>
+
+  <!-- MAIN CONTENT -->
+  <main id="content" class="content"></main>
+
+  <!-- VESSEL BOTTOM NAV -->
+  <nav id="vessel-bottom-nav" class="vessel-bottom-nav"></nav>
+</div>
+
+<!-- ===================== MODALS ===================== -->
+<!-- Change PIN modal -->
+<div id="modal-pin" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-title">تغییر رمز عبور</div>
+    <div class="modal-body">
+      <p class="modal-hint">رمز جدید ۴ رقمی را وارد کنید</p>
+      <div class="pin-display" id="new-pin-display">
+        <span class="pin-dot"></span><span class="pin-dot"></span>
+        <span class="pin-dot"></span><span class="pin-dot"></span>
+      </div>
+      <div class="pin-pad" id="new-pin-pad">
+        <button type="button" class="key" data-digit="1">1</button>
+        <button type="button" class="key" data-digit="2">2</button>
+        <button type="button" class="key" data-digit="3">3</button>
+        <button type="button" class="key" data-digit="4">4</button>
+        <button type="button" class="key" data-digit="5">5</button>
+        <button type="button" class="key" data-digit="6">6</button>
+        <button type="button" class="key" data-digit="7">7</button>
+        <button type="button" class="key" data-digit="8">8</button>
+        <button type="button" class="key" data-digit="9">9</button>
+        <button type="button" class="key key-action" data-action="clear">پاک</button>
+        <button type="button" class="key" data-digit="0">0</button>
+        <button type="button" class="key key-action" data-action="back">⌫</button>
+      </div>
+      <p id="new-pin-status" class="modal-hint" style="margin-top:8px;"></p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="modal-pin-cancel">انصراف</button>
+    </div>
+  </div>
+</div>
+
+<!-- Charterers manager modal -->
+<div id="modal-charterers" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-title">مدیریت چارترکنندگان</div>
+    <div class="modal-body">
+      <div class="entry-form" style="margin-bottom:12px;">
+        <div class="form-field grow-2">
+          <label>نام چارترکننده جدید</label>
+          <input type="text" id="charterer-name-input" placeholder="نام شرکت یا فرد" />
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary btn-sm" id="add-charterer-btn">افزودن</button>
+        </div>
+      </div>
+      <div id="charterers-list" class="charterers-list"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="modal-charterers-close">بستن</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PDF TEMPLATE ===================== -->
+<div id="pdf-capture-wrap" class="pdf-capture-wrap">
+  <div id="pdf-report" class="pdf-report"></div>
+</div>
+
+<!-- ===================== TOAST ===================== -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jalaali-js@1.2.2/dist/jalaali.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
