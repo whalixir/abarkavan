@@ -138,6 +138,8 @@ async function ensureSchema(db) {
         created_at TEXT NOT NULL DEFAULT (datetime('now'))
       )
     `),
+    db.prepare(`
+      CREATE TABLE IF NOT EXISTS charterers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL UNIQUE,
         created_by TEXT,
@@ -164,7 +166,7 @@ async function ensureSchema(db) {
   ]);
   // Add deleted_at column if it doesn't exist yet (for existing databases)
   try {
-    await env.DB.prepare("ALTER TABLE transactions ADD COLUMN deleted_at TEXT DEFAULT NULL").run();
+    await db.prepare("ALTER TABLE transactions ADD COLUMN deleted_at TEXT DEFAULT NULL").run();
   } catch (e) {
     // Column already exists — ignore
   }
