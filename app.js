@@ -1,7 +1,7 @@
 // =============================================================
 // Abarkavan Fleet Accounting — app.js v5
 // =============================================================
-const API_BASE = ""; // Pages Functions — same domain
+const API_BASE = "https://abarkavan.4dgwb9f5dh.workers.dev";
 
 const VESSELS = [
   { key:"ABARKAVAN",   label:"ABARKAVAN",   icon:"⚓" },
@@ -1300,7 +1300,7 @@ function renderShareholderTable(rows){
         : `<button class="btn btn-sm" style="background:#E8F5E9;color:#1E9E63;border:1px solid #A5D6A7;" data-settle="${r.id}">تسویه</button>`
       }</td>
       <td>${escapeHtml(r.recorded_by)}</td>
-      <td>${state.isAdmin&&!r.settled?`<button class="btn btn-sm btn-danger" data-sh-del="${r.id}">حذف</button>`:""}</td>
+      <td>${state.isAdmin?`<button class="btn btn-sm btn-danger" data-sh-del="${r.id}">حذف</button>`:""}</td>
     </tr>`).join("");
 
   tbody.querySelectorAll("[data-settle]").forEach(btn=>btn.addEventListener("click", async()=>{
